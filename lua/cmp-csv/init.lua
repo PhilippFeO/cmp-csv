@@ -17,12 +17,11 @@ M.parsed_csv = {}
 M.items = {}
 
 M.setup = function(options)
-    -- print(vim.inspect(options))
     vim.validate({
+        -- value before '=' is used in error message
         csv_path = { options.csv_path, 'string' },
         documentation_format = { options.documentation_format, 'string' },
     })
-    -- print(vim.inspect(options))
 
     M.defaults = vim.tbl_extend("force", M.defaults, options)
 
