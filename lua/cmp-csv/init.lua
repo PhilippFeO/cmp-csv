@@ -77,7 +77,7 @@ M.setup = function(options)
         callback(M.items)
     end
 
-    require("cmp").register_source("ingredients", source.new())
+    require("cmp").register_source("cmp-csv", source.new())
 end
 
 return M
