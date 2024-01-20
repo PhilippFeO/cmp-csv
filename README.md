@@ -36,8 +36,6 @@ require("cmp").setup({
 ```
 
 ## Acknowledgements
-- [TJ DeVires](https://github.com/tjdevries)' viedo on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) was a great help and is an inspiration: [TakeTuesday E01: nvim-cmp](https://www.youtube.com/watch?v=_DnmphIwnjo)
-
----
+- [TJ DeVires](https://github.com/tjdevries) video on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) was a great help and is an inspiration: [TakeTuesday E01: nvim-cmp](https://www.youtube.com/watch?v=_DnmphIwnjo)
 
 [^1]: Currently, no space(s) around the `,` are skipped, ie. `John ,...` will capture `John ` (there is a whitespace after `John`).
