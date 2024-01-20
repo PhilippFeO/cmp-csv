@@ -26,6 +26,15 @@ require('cmp-csv').setup({
 - `documentation_format`: Lua format string, should contain three `%s`. No checks are performed, example: `%s (Col 1)\n%s (Col 2)\n%s (Col 3)`.
 - `csv_path`: Path to the `csv`-file to generated sources for [nvim-cmp](https://github.com/hrsh7th/nvim-cmp). Without a `csv`-file no sources can be generated and `setup()` will fail. No consistency checks for the `csv` are performed[^1]. 
 
+## Enabling within [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+```lua
+require("cmp").setup({
+  sources = {
+    { name = "cmp-csv" },
+  }
+})
+```
+
 ## Acknowledgements
 - [TJ DeVires](https://github.com/tjdevries)' viedo on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) was a great help and is an inspiration: [TakeTuesday E01: nvim-cmp](https://www.youtube.com/watch?v=_DnmphIwnjo)
 
