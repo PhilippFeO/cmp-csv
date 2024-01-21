@@ -34,7 +34,7 @@ require('cmp-csv').setup({
 ```lua
 require("cmp").setup({
   sources = {
-    { name = "cmp-csv" },
+    { name = "cmp_csv" }, -- _ not -
   }
 })
 ```
