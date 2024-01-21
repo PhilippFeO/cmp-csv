@@ -4,6 +4,7 @@ M.defaults = {
     documentation_format = "%s\n%s\n%s",
     csv_path = nil,
     completion_column = 1,
+    skip_rows = 0
 }
 
 -- Holds the lines in `csv_path` as Key-Value entries
@@ -25,6 +26,11 @@ M.setup = function(options)
     local file = assert(io.open(M.defaults.csv_path, "r"), "Error opening file: " .. M.defaults.csv_path)
     local lnr = 1
     for line in file:lines() do
+        if lnr <= M.defaults.skip_rows then
+            -- Having one `lnr = lnr + 1` after `::continue::` throws error '<goto continue> jumps into the scope of local 'row''
+            lnr = lnr + 1
+            goto continue
+        end
         -- values will be referenced by index
         local row = {}
         for value in line:gmatch("[^,]+") do
@@ -38,8 +44,17 @@ M.setup = function(options)
         end
         lnr = lnr + 1
         table.insert(M.parsed_csv, row)
+        ::continue::
     end
     file:close()
+
+    if #M.parsed_csv == 0 then
+        local error_msg = string.format(
+            "You may have skipped more rows (%d) than '%s' provides. You won't receive any completion based on your CSV file.",
+            M.defaults.skip_rows,
+            M.defaults.csv_path)
+        error(error_msg)
+    end
 
     -- Transform parsed_csv into a table `nvim-cmp` understands
     for _, icu_entry in ipairs(M.parsed_csv) do
