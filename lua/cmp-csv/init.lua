@@ -1,16 +1,12 @@
--- TODO: Let user decide which entry in CSV is used for completion <19-01-2024>
-
 local M = {}
 
 M.defaults = {
     documentation_format = "%s\n%s\n%s",
-    -- TODO: Remove default value and make csv_path obligatory by checking it's existence, ie. throw an error when missing <19-01-2024>
-    csv_path = nil
+    csv_path = nil,
+    completion_column = 1,
 }
 
 -- Holds the lines in `csv_path` as Key-Value entries
--- TODO: Key-Value probably not necessary since they will be ordered as defined in csv <19-01-2024>
--- Also: Key-Value is an obstacle to generalize to arbitrary values in one line
 M.parsed_csv = {}
 
 -- Holds the entries used bei `nvim-cmp` to display completion, thus used in `source.complete()`
@@ -27,15 +23,21 @@ M.setup = function(options)
 
     -- Parse csv
     local file = assert(io.open(M.defaults.csv_path, "r"), "Error opening file: " .. M.defaults.csv_path)
+    local lnr = 1
     for line in file:lines() do
-        local name, category, url = line:match("([^,]+),([^,]+),([^,]+)")
-
-        -- Check if all fields are present
-        if name and category and url then
-            table.insert(M.parsed_csv, { ingredient = name, category = category, url = url })
-        else
-            print("Skipping invalid line:", line)
+        -- values will be referenced by index
+        local row = {}
+        for value in line:gmatch("[^,]+") do
+            table.insert(row, value)
         end
+        if M.defaults.completion_column > #row then
+            error(string.format("Error: %d exceeds number of values in row %d of file %s",
+                M.defaults.completion_column,
+                lnr,
+                M.defaults.csv_path))
+        end
+        lnr = lnr + 1
+        table.insert(M.parsed_csv, row)
     end
     file:close()
 
@@ -43,15 +45,14 @@ M.setup = function(options)
     for _, icu_entry in ipairs(M.parsed_csv) do
         table.insert(M.items, {
             -- `label` is shown in the completion proposals
-            label = icu_entry.ingredient,
-            -- `Window with explanation`
+            label = icu_entry[M.defaults.completion_column],
+            -- Window with explanation
             documentation = {
                 kind = "text",
                 value = string.format(
                     M.defaults.documentation_format,
-                    icu_entry.ingredient,
-                    icu_entry.category,
-                    icu_entry.url
+                    -- table.unpack() doesn't work due to some deprecation issues I don't understand.
+                    unpack(icu_entry)
                 )
             }
         })
