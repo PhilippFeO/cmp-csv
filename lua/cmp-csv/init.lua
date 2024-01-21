@@ -18,8 +18,8 @@ M.setup = function(options)
         -- value before '=' is used in error message
         csv_path = { options.csv_path, 'string' },
         documentation_format = { options.documentation_format, 'string' },
-        completion_column = { options.completion_column, 'number' },
-        skip_rows = { options.skip_rows, 'number' }
+        completion_column = { options.completion_column, 'number', true },
+        skip_rows = { options.skip_rows, 'number', true }
     })
 
     M.defaults = vim.tbl_extend("force", M.defaults, options)
