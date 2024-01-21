@@ -18,12 +18,14 @@ There are currently two options, one, `csv_path`, is mandatory.
 require('cmp-csv').setup({
   documentation_format = '',
   csv_path = '' -- No csv, no party 😞
+  filetype = '',
   completion_column = 1,
   skip_rows = 0
 })
 ```
 - `documentation_format`: Lua format string, should contain three `%s`. No checks are performed, example: `%s (Col 1)\n%s (Col 2)\n%s (Col 3)`.
 - `csv_path`: Path to the `csv`-file to generated sources for [nvim-cmp](https://github.com/hrsh7th/nvim-cmp). Without a `csv`-file no sources can be established and `setup()` will fail. No consistency checks for the `csv` are performed[^1]. 
+- `filetype`: In which buffers we wish to have the completion.
 - `completion_column`: Which column of your CSV is used for syntax completion. If it exceeds the number of values in one row, an error is thrown.
 - `skip_rows`: First rows to skip in case there are header information. An error is thrown if `skip_rows` exceeds the line number of `csv_path`.
 

@@ -3,6 +3,8 @@ local M = {}
 M.defaults = {
     documentation_format = '',
     csv_path = '',
+    -- TODO: It is probably better to let nvim-cmp control this option directly but currently I don't know how. <21-01-2024>
+    filetype = '',
     completion_column = 1,
     skip_rows = 0
 }
@@ -18,6 +20,7 @@ M.setup = function(options)
         -- value before '=' is used in error message
         documentation_format = { options.documentation_format, 'string' }, -- Will throw error on empty string ('' == nil != string)
         csv_path = { options.csv_path, 'string' },
+        filetype = { options.filetype, 'string' },
         completion_column = { options.completion_column, 'number', true },
         skip_rows = { options.skip_rows, 'number', true }
     })
@@ -87,10 +90,10 @@ M.setup = function(options)
         return self
     end
 
-    -- Only enable in `yaml` buffers
+    -- Only enable in certain buffers
     -- s. `h cmp-develop`
     source.is_available = function()
-        return vim.bo.filetype == 'yaml' or vim.bo.filetype == 'yml'
+        return vim.bo.filetype == M.defaults.filetype
     end
 
     source.complete = function(_, _, callback)
