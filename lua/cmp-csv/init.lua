@@ -1,7 +1,7 @@
 local M = {}
 
 M.defaults = {
-    documentation_format = "%s\n%s\n%s",
+    documentation_format = '',
     csv_path = '',
     completion_column = 1,
     skip_rows = 0
@@ -16,8 +16,8 @@ M.items = {}
 M.setup = function(options)
     vim.validate({
         -- value before '=' is used in error message
+        documentation_format = { options.documentation_format, 'string' }, -- Will throw error on empty string ('' == nil != string)
         csv_path = { options.csv_path, 'string' },
-        documentation_format = { options.documentation_format, 'string' },
         completion_column = { options.completion_column, 'number', true },
         skip_rows = { options.skip_rows, 'number', true }
     })
@@ -39,10 +39,12 @@ M.setup = function(options)
             table.insert(row, value)
         end
         if M.defaults.completion_column > #row then
-            error(string.format("Error: %d exceeds number of values in row %d of file %s",
+            local error_msg = string.format(
+                "Error: %d exceeds number of values in row %d of file %s",
                 M.defaults.completion_column,
                 lnr,
-                M.defaults.csv_path))
+                M.defaults.csv_path)
+            error(error_msg)
         end
         lnr = lnr + 1
         table.insert(M.parsed_csv, row)

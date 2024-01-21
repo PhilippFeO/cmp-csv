@@ -16,7 +16,7 @@ This plugin will add completion for the values of an arbitrary column of a `csv`
 There are currently two options, one, `csv_path`, is mandatory.
 ```lua
 require('cmp-csv').setup({
-  documentation_format = "%s\n%s\n%s",
+  documentation_format = '',
   csv_path = '' -- No csv, no party 😞
   completion_column = 1,
   skip_rows = 0
