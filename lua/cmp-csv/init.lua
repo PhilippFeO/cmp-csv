@@ -22,6 +22,7 @@ M.setup = function(options)
         skip_rows = { options.skip_rows, 'number', true }
     })
 
+    options.csv_path = vim.fn.expand(options.csv_path)
     M.defaults = vim.tbl_extend("force", M.defaults, options)
 
     -- Parse csv
