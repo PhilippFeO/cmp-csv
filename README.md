@@ -1,9 +1,6 @@
 # cmp-csv
 
-This plugin will add completion for the values of the first column of a `csv`-file having three columns in total.
-
-## Outline
-As you may already have guessed, the application horizon is quite limited. In the next days, I will work on extending the plugin to use an arbitrary column of a `csv`-file with arbitrary columns.
+This plugin will add completion for the values of an arbitrary column of a `csv`-file.
 
 ## Installation (Lazy.nvim)
 ```lua
@@ -34,7 +31,7 @@ require('cmp-csv').setup({
 ```lua
 require("cmp").setup({
   sources = {
-    { name = "cmp_csv" }, -- _ not -
+    { name = "cmp_csv" }, -- _ not - 😯
   }
 })
 ```
