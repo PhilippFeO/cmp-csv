@@ -2,7 +2,7 @@ local M = {}
 
 M.defaults = {
     documentation_format = "%s\n%s\n%s",
-    csv_path = nil,
+    csv_path = '',
     completion_column = 1,
     skip_rows = 0
 }
