@@ -6,7 +6,7 @@ This plugin will add completion for the values of an arbitrary column of a `csv`
 ```lua
 {
   'PhilippFeO/cmp-csv',
-  opts {
+  opts = {
     -- see below
   }
 }
@@ -33,7 +33,7 @@ require('cmp-csv').setup({
 ```lua
 require("cmp").setup({
   sources = {
-    { name = "cmp_csv" }, -- _ not - 😯
+    { name = "cmp_csv" }, -- '_' not '-' 😯
   }
 })
 ```
