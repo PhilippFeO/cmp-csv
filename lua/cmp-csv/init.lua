@@ -72,6 +72,8 @@ M.setup = function(options)
       -- Window with explanation
       documentation = {
         kind = "text",
+        -- also work if format string has less placeholders than entries given
+        -- Important for my recipe completion, beacause the entries per row differ but is always >=3
         value = string.format(
           M.defaults.documentation_format,
           -- table.unpack() doesn't work due to some deprecation issues I don't understand.
